@@ -233,7 +233,7 @@ ul {
 /* ---------- Hero art ---------- */
 .hero__art {
   position: relative;
-  height: 400px;
+  height: 440px;
 }
 
 .hero__circle {
@@ -241,24 +241,24 @@ ul {
   top: 50%;
   left: 50%;
   z-index: 1;
-  width: 180px;
+  width: 200px;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(24, 155, 27, 0.22), rgba(47, 191, 51, 0.28));
-  box-shadow: inset 0 0 0 1px rgba(24, 155, 27, 0.18), var(--shadow-lg);
+  background: transparent;
+  box-shadow: var(--shadow-lg);
   display: grid;
   place-items: center;
   text-align: center;
-  color: #fff;
   transform: translate(-50%, -50%);
 }
 
 .hero__circle::before {
   content: "";
   position: absolute;
-  inset: 12px;
-  border: 1px dashed rgba(255, 255, 255, 0.55);
+  inset: 10px;
+  border: 2px dashed var(--color-primary);
   border-radius: 50%;
+  opacity: 0.5;
 }
 
 .hero__circle-logo {
@@ -298,9 +298,9 @@ ul {
   background: var(--color-primary-light);
 }
 
-.hero__card--1 { top: 0; left: 0; }
-.hero__card--2 { top: 0; right: 0; animation-delay: 1.2s; }
-.hero__card--3 { bottom: 0; left: 50%; margin-left: -80px; animation-delay: 2.4s; }
+.hero__card--1 { top: 0; left: -20px; }
+.hero__card--2 { top: 0; right: -20px; animation-delay: 1.2s; }
+.hero__card--3 { bottom: -10px; left: 50%; margin-left: -80px; animation-delay: 2.4s; }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
