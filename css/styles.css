@@ -238,7 +238,7 @@ ul {
 
 .hero__circle {
   position: absolute;
-  top: 38%;
+  top: 40%;
   left: 50%;
   z-index: 1;
   width: 200px;
@@ -298,9 +298,9 @@ ul {
   background: var(--color-primary-light);
 }
 
-.hero__card--1 { top: 0; left: -20px; }
-.hero__card--2 { top: 0; right: -20px; animation-delay: 1.2s; }
-.hero__card--3 { bottom: 0; left: 50%; margin-left: -80px; animation-delay: 2.4s; }
+.hero__card--1 { top: 4%; left: -20px; }
+.hero__card--2 { top: 4%; right: -20px; animation-delay: 1.2s; }
+.hero__card--3 { bottom: 4%; left: 50%; margin-left: -80px; animation-delay: 2.4s; }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
