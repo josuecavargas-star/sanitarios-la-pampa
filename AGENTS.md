@@ -76,13 +76,26 @@ sanitarios-la-pampa/
 ## Workflow de Deploy
 
 1. Editas archivos en `public/` (o `wrangler.jsonc` en la raíz)
-2. `git add .`
-3. `git commit` — mensaje en **lenguaje natural** en español, explicando qué se cambió
-4. **Preguntar al usuario antes de push**
-5. `git push origin main`
-6. Cloudflare detecta el push y redeploya en 1-2 minutos
+2. Verificás el cambio en local antes de subirlo (ver "Vista previa local" más abajo)
+3. `git add .`
+4. `git commit` — mensaje en **lenguaje natural** en español, explicando qué se cambió
+5. **NO hacer push sin que el usuario lo pida explícitamente.** El commit se queda en local hasta que él lo autorice.
+6. `git push origin main` — solo cuando el usuario lo ordene
+7. Cloudflare detecta el push y redeploya en 1-2 minutos
+
+## Vista previa local
+
+Antes de pedir el push, se puede levantar un servidor local desde la carpeta `public/`:
+
+```
+python -m http.server 8000
+```
+
+Y abrir `http://localhost:8000` en el navegador. Ctrl+C para detenerlo.
 
 ## Notas Importantes
+
+- **Nunca hacer push sin orden explícita del usuario**: aunque ya se haya autorizado un push anterior, cada push nuevo requiere una instrucción nueva suya. El push dispara el deploy en Cloudflare y él quiere revisar los cambios en local primero.
 
 - **No usar Cloudflare Pages**: este proyecto usa **Cloudflare Workers** con `wrangler.jsonc`. Los archivos del sitio van en `public/` y el `wrangler.jsonc` en la raíz.
 - **La carpeta `public/` es invisible en la URL**: en GitHub el repo tiene `public/` como subcarpeta, pero Cloudflare Workers sirve su contenido como raíz.
