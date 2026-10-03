@@ -35,10 +35,9 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
 
       const nombre = form.nombre.value.trim();
-      const telefono = form.telefono.value.trim();
       const mensaje = form.mensaje.value.trim();
 
-      if (!nombre || !telefono || !mensaje) {
+      if (!nombre || !mensaje) {
         note.style.color = "#c0392b";
         note.textContent = "Por favor completá todos los campos.";
         return;
@@ -47,8 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const whatsappText = [
         "Hola, quiero solicitar un servicio.",
         `Nombre: ${nombre}`,
-        `Teléfono: ${telefono}`,
-        `Mensaje: ${mensaje}`,
+        `Consulta: ${mensaje}`,
       ].join("\n");
       const whatsappUrl = new URL("https://wa.me/50683444802");
       whatsappUrl.searchParams.set("text", whatsappText);
