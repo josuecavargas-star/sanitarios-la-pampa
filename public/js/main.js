@@ -44,10 +44,24 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Aquí puedes conectar un servicio real (Netlify Forms, Formspree, etc.)
+      const whatsappText = [
+        "Hola, quiero solicitar un servicio.",
+        `Nombre: ${nombre}`,
+        `Teléfono: ${telefono}`,
+        `Mensaje: ${mensaje}`,
+      ].join("\n");
+      const whatsappUrl = new URL("https://wa.me/50683444802");
+      whatsappUrl.searchParams.set("text", whatsappText);
+
+      const whatsappWindow = window.open(whatsappUrl.toString(), "_blank");
+      if (whatsappWindow) {
+        whatsappWindow.opener = null;
+      } else {
+        window.location.href = whatsappUrl.toString();
+      }
+
       note.style.color = "#189b1b";
-      note.textContent = `¡Gracias, ${nombre}! Recibimos tu mensaje.`;
-      form.reset();
+      note.textContent = "Revisa el mensaje en WhatsApp y pulsa Enviar para contactarnos.";
     });
   }
 
