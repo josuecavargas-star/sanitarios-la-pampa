@@ -2,14 +2,12 @@
    Sanitarios La Pampa - JavaScript principal
    ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-  /* ---------- Año dinámico en el footer ---------- */
+const initSite = () => {
   const yearEl = document.getElementById("year");
   if (yearEl) {
     yearEl.textContent = new Date().getFullYear();
   }
 
-  /* ---------- Menú de navegación móvil ---------- */
   const navToggle = document.getElementById("navToggle");
   const nav = document.getElementById("nav");
 
@@ -18,7 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
       nav.classList.toggle("is-open");
     });
 
-    // Cerrar el menú al hacer clic en un enlace
     nav.querySelectorAll("a").forEach((link) => {
       link.addEventListener("click", () => {
         nav.classList.remove("is-open");
@@ -26,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ---------- Formulario de contacto ---------- */
   const form = document.getElementById("contactForm");
   const note = document.getElementById("formNote");
 
@@ -48,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `Nombre: ${nombre}`,
         `Consulta: ${mensaje}`,
       ].join("\n");
+
       const whatsappUrl = new URL("https://wa.me/50683444802");
       whatsappUrl.searchParams.set("text", whatsappText);
 
@@ -63,91 +60,118 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ---------- Slider / Galería ---------- */
-  const track = document.getElementById("sliderTrack");
-  const slides = track ? Array.from(track.children) : [];
-  const prevBtn = document.getElementById("slidePrev");
-  const nextBtn = document.getElementById("slideNext");
-  const dotsWrap = document.getElementById("sliderDots");
+  document.querySelectorAll(".slider").forEach((sliderEl) => {
+    const track = sliderEl.querySelector(".slider__track");
+    const slides = track ? Array.from(track.children) : [];
+    const prevBtn = sliderEl.querySelector(".slider__arrow--prev");
+    const nextBtn = sliderEl.querySelector(".slider__arrow--next");
+    const dotsWrap = sliderEl.querySelector(".slider__dots");
 
-  if (track && slides.length > 0) {
+    if (!track || slides.length === 0) return;
+
     let current = 0;
     let autoplayTimer = null;
-
-    // Crear los indicadores (puntos) dinámicamente
-    slides.forEach((_, i) => {
-      const dot = document.createElement("button");
-      dot.className = "slider__dot" + (i === 0 ? " is-active" : "");
-      dot.setAttribute("aria-label", `Ir al slide ${i + 1}`);
-      dot.addEventListener("click", () => goTo(i));
-      if (dotsWrap) dotsWrap.appendChild(dot);
-    });
-
-    const dots = dotsWrap ? Array.from(dotsWrap.children) : [];
 
     function goTo(index) {
       current = (index + slides.length) % slides.length;
       track.style.transform = `translateX(-${current * 100}%)`;
-      dots.forEach((d, i) => d.classList.toggle("is-active", i === current));
+
+      if (dotsWrap) {
+        const dots = Array.from(dotsWrap.children);
+        dots.forEach((dot, i) => dot.classList.toggle("is-active", i === current));
+      }
     }
 
-    function next() { goTo(current + 1); }
-    function prev() { goTo(current - 1); }
-
-    if (nextBtn) nextBtn.addEventListener("click", () => { next(); restart(); });
-    if (prevBtn) prevBtn.addEventListener("click", () => { prev(); restart(); });
-
-    // Autoplay cada 5 segundos
-    function start() { autoplayTimer = setInterval(next, 5000); }
-    function stop() { clearInterval(autoplayTimer); }
-    function restart() { stop(); start(); }
-
-    // Pausar al pasar el mouse
-    const sliderEl = document.querySelector(".slider");
-    if (sliderEl) {
-      sliderEl.addEventListener("mouseenter", stop);
-      sliderEl.addEventListener("mouseleave", start);
+    function next() {
+      goTo(current + 1);
     }
 
-    // Soporte para swipe en móviles
+    function prev() {
+      goTo(current - 1);
+    }
+
+    function stopAutoplay() {
+      if (autoplayTimer) {
+        clearInterval(autoplayTimer);
+        autoplayTimer = null;
+      }
+    }
+
+    function startAutoplay() {
+      stopAutoplay();
+      autoplayTimer = setInterval(next, 5000);
+    }
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "slider__dot" + (i === 0 ? " is-active" : "");
+      dot.setAttribute("aria-label", `Ir al slide ${i + 1}`);
+      dot.addEventListener("click", () => {
+        goTo(i);
+        startAutoplay();
+      });
+      if (dotsWrap) dotsWrap.appendChild(dot);
+    });
+
+    if (nextBtn) {
+      nextBtn.addEventListener("click", () => {
+        next();
+        startAutoplay();
+      });
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener("click", () => {
+        prev();
+        startAutoplay();
+      });
+    }
+
+    sliderEl.addEventListener("mouseenter", stopAutoplay);
+    sliderEl.addEventListener("mouseleave", startAutoplay);
+
     let touchStartX = 0;
-    track.addEventListener("touchstart", (e) => {
-      touchStartX = e.changedTouches[0].screenX;
+    track.addEventListener("touchstart", (event) => {
+      touchStartX = event.changedTouches[0].screenX;
     }, { passive: true });
 
-    track.addEventListener("touchend", (e) => {
-      const diff = e.changedTouches[0].screenX - touchStartX;
+    track.addEventListener("touchend", (event) => {
+      const diff = event.changedTouches[0].screenX - touchStartX;
+
       if (Math.abs(diff) > 40) {
         diff < 0 ? next() : prev();
-        restart();
+        startAutoplay();
       }
     });
 
-    // Teclado
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowRight") { next(); restart(); }
-      if (e.key === "ArrowLeft") { prev(); restart(); }
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight") {
+        next();
+        startAutoplay();
+      }
+      if (event.key === "ArrowLeft") {
+        prev();
+        startAutoplay();
+      }
     });
 
-    start();
-  }
+    goTo(0);
+    startAutoplay();
+  });
 
-  /* ---------- Animación de aparición al hacer scroll ---------- */
   const revealElements = document.querySelectorAll(".card, .stat");
 
   if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = "1";
-            entry.target.style.transform = "translateY(0)";
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = "1";
+          entry.target.style.transform = "translateY(0)";
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
 
     revealElements.forEach((el) => {
       el.style.opacity = "0";
@@ -156,4 +180,10 @@ document.addEventListener("DOMContentLoaded", () => {
       observer.observe(el);
     });
   }
-});
+};
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initSite);
+} else {
+  initSite();
+}

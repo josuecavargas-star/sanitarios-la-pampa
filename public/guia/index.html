@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guías de avance | Sanitarios La Pampa</title>
+  <style>
+    :root {
+      --bg: #f6f7f4;
+      --panel: #ffffff;
+      --panel-alt: #edf3eb;
+      --text: #1e2a1e;
+      --muted: #526153;
+      --line: #d8e0d6;
+      --brand: #189b1b;
+      --brand-dark: #0f6f12;
+      --shadow: rgba(12, 34, 14, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .brand {
+      font-weight: 700;
+      font-size: clamp(1.1rem, 2vw, 1.6rem);
+      color: var(--brand-dark);
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn,
+    select {
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      font: inherit;
+      padding: 10px 14px;
+      box-shadow: 0 6px 18px var(--shadow);
+    }
+
+    .btn {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--brand);
+      border-color: transparent;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 24px;
+    }
+
+    .sidebar,
+    .content {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 12px 30px var(--shadow);
+    }
+
+    .sidebar {
+      padding: 18px;
+      height: fit-content;
+    }
+
+    .sidebar h2 {
+      margin: 0 0 12px;
+      font-size: 1.1rem;
+      color: var(--brand-dark);
+    }
+
+    .guide-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .guide-list button {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--line);
+      background: var(--panel-alt);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .guide-list button.active {
+      background: var(--brand);
+      color: #fff;
+      border-color: transparent;
+    }
+
+    .content {
+      padding: 28px 28px 40px;
+      overflow-wrap: anywhere;
+    }
+
+    .content h1,
+    .content h2,
+    .content h3,
+    .content h4 {
+      color: var(--brand-dark);
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+      line-height: 1.2;
+    }
+
+    .content h1 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-top: 0; }
+    .content h2 { font-size: clamp(1.4rem, 2vw, 2rem); }
+    .content p,
+    .content li {
+      color: var(--text);
+      margin: 0.8em 0;
+    }
+
+    .content ul,
+    .content ol {
+      padding-left: 1.5rem;
+    }
+
+    .content a {
+      color: var(--brand-dark);
+      text-decoration: underline;
+    }
+
+    .content strong { color: var(--brand-dark); }
+
+    .content code {
+      background: #f1f4f1;
+      padding: 0.15em 0.35em;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      font-size: 0.95em;
+    }
+
+    .content pre {
+      background: #101a10;
+      color: #ecf9ee;
+      padding: 16px;
+      border-radius: 12px;
+      overflow-x: auto;
+    }
+
+    @media (max-width: 760px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .content {
+        padding: 22px 18px 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <div class="brand">Guías de avance</div>
+      <div class="actions">
+        <a class="btn" href="/">Volver al sitio</a>
+      </div>
+    </div>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Documentos</h2>
+        <ul class="guide-list" id="guideList"></ul>
+      </aside>
+
+      <main class="content" id="guideContent">
+        <p>Cargando guía…</p>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const guides = [
+      { label: 'Avance 2026-10-03', file: 'avance-2026-10-03.md' },
+      { label: 'Avance 2026-10-02', file: 'avance-2026-10-02.md' },
+      { label: 'Avance 2026-10-01', file: 'avance-2026-10-01.md' },
+      { label: 'Avance 2026-09-30', file: 'avance-2026-09-30.md' },
+      { label: 'Avance 2026-09-22', file: 'avance-2026-09-22.md' },
+      { label: 'Avance 2026-09-21', file: 'avance-2026-09-21.md' },
+      { label: 'Avance 2026-09-19', file: 'avance-2026-09-19.md' }
+    ];
+
+    const guideList = document.getElementById('guideList');
+    const guideContent = document.getElementById('guideContent');
+
+    function escapeHtml(value) {
+      return value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function renderInlineMarkdown(text) {
+      const escaped = escapeHtml(text);
+      return escaped
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+    }
+
+    function renderMarkdown(markdown) {
+      const lines = markdown.replace(/\r/g, '').split('\n');
+      let html = '';
+      let listType = null;
+      let listBuffer = [];
+
+      function flushList() {
+        if (!listBuffer.length) return;
+        const tag = listType === 'ol' ? 'ol' : 'ul';
+        html += `<${tag}>${listBuffer.join('')}</${tag}>`;
+        listBuffer = [];
+        listType = null;
+      }
+
+      function closeParagraph() {
+        if (!html.endsWith('</p>')) {
+          html += '</p>';
+        }
+      }
+
+      const parseLine = (line) => {
+        if (!line.trim()) {
+          flushList();
+          return;
+        }
+
+        if (/^#{1,6}\s/.test(line)) {
+          flushList();
+          const level = line.match(/^#+/)[0].length;
+          const text = renderInlineMarkdown(line.replace(/^#{1,6}\s/, ''));
+          html += `<h${level}>${text}</h${level}>`;
+          return;
+        }
+
+        if (/^[-*]\s+/.test(line)) {
+          const text = renderInlineMarkdown(line.replace(/^[-*]\s+/, ''));
+          if (listType !== 'ul') {
+            flushList();
+            listType = 'ul';
+          }
+          listBuffer.push(`<li>${text}</li>`);
+          return;
+        }
+
+        if (/^\d+\.\s+/.test(line)) {
+          const text = renderInlineMarkdown(line.replace(/^\d+\.\s+/, ''));
+          if (listType !== 'ol') {
+            flushList();
+            listType = 'ol';
+          }
+          listBuffer.push(`<li>${text}</li>`);
+          return;
+        }
+
+        if (!html.endsWith('</p>')) {
+          html += '<p>';
+        }
+
+        html += `${renderInlineMarkdown(line)}<br />`;
+      };
+
+      for (const rawLine of lines) {
+        const line = rawLine.trimEnd();
+        if (line.trim() === '') {
+          flushList();
+          if (html.endsWith('<br />')) {
+            html = html.slice(0, -6) + '</p>';
+          }
+          continue;
+        }
+        parseLine(line);
+      }
+
+      flushList();
+      if (html.endsWith('<br />')) {
+        html = html.slice(0, -6) + '</p>';
+      }
+
+      return html;
+    }
+
+    function setActive(file) {
+      guideList.querySelectorAll('button').forEach((button) => {
+        button.classList.toggle('active', button.dataset.file === file);
+      });
+    }
+
+    async function loadGuide(file) {
+      setActive(file);
+      guideContent.innerHTML = '<p>Cargando guía…</p>';
+
+      try {
+        const response = await fetch(file, { cache: 'no-store' });
+        if (!response.ok) {
+          throw new Error('No se pudo cargar la guía');
+        }
+
+        const markdown = await response.text();
+        const html = renderMarkdown(markdown);
+        guideContent.innerHTML = html;
+      } catch (error) {
+        guideContent.innerHTML = '<p>No se pudo cargar esta guía. Intenta con otra opción.</p>';
+        console.error(error);
+      }
+    }
+
+    guides.forEach((guide) => {
+      const item = document.createElement('li');
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = guide.label;
+      button.dataset.file = guide.file;
+      button.addEventListener('click', () => loadGuide(guide.file));
+      item.appendChild(button);
+      guideList.appendChild(item);
+    });
+
+    loadGuide(guides[0].file);
+  </script>
+</body>
+</html>
