@@ -475,7 +475,7 @@ ul {
 }
 
 .grid--servicios {
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   max-width: 860px;
   margin-inline: auto;
 }
@@ -851,7 +851,7 @@ ul {
   }
 
   .hero__art {
-    order: -1;
+    order: 0;
   }
 }
 
