@@ -32,12 +32,12 @@ sanitarios-la-pampa/
 ├── AGENTS.md              ← esta guía
 ├── wrangler.jsonc         ← config de Cloudflare Workers
 ├── CONVENCION_COMMITS.md  ← convención de commits del proyecto
+├── guias-internas/        ← historial local privado y visor de guías (no se publica)
 └── public/                ← archivos del sitio web
     ├── index.html         ← página principal (todas las secciones)
     ├── css/styles.css     ← estilos
     ├── js/main.js         ← scripts
     ├── img/               ← logo y fotos de la galería
-    └── guia/              ← historial de avances del proyecto
 ```
 
 ## Configuración Clave
@@ -69,9 +69,10 @@ sanitarios-la-pampa/
 1. **Header** — Logo, navegación por anclas (Inicio, Servicios, Galería, Nosotros, Contacto) e iconos SVG de redes sociales (WhatsApp, Facebook, Instagram, Linktree).
 2. **Hero** — Logo centrado sobre fondo blanco + tres tarjetas equidistanciadas (Destaqueo, Tanques sépticos, 24/7) + botones de llamada.
 3. **Galería** — Slider con fotos de trabajos (`img/_MG_*.jpg`).
-4. **Servicios** — Tarjetas: limpieza de tanques sépticos, destapeo de tuberías con sonda eléctrica y aire, servicio 24/7 en Guanacaste.
-5. **Nosotros** — Más de 15 años de experiencia, estadísticas (años, 24/7, líneas de contacto).
-6. **Contacto** — Tres líneas telefónicas y formulario (`#contactForm`).
+4. **Opiniones** — Carrusel compacto con seis capturas en `img/comentarios/`, reproducción automática cada 2 segundos, flechas e indicadores; al pulsar una captura se abre en tamaño original.
+5. **Servicios** — Tarjetas: limpieza de tanques sépticos, destapeo de tuberías con sonda eléctrica y aire, servicio 24/7 en Guanacaste.
+6. **Nosotros** — Más de 15 años de experiencia, estadísticas (años, 24/7, líneas de contacto).
+7. **Contacto** — Tres líneas telefónicas y formulario (`#contactForm`).
 
 ## Workflow de Deploy
 
@@ -88,10 +89,10 @@ sanitarios-la-pampa/
 Antes de pedir el push, se puede levantar un servidor local desde la carpeta `public/`:
 
 ```
-python -m http.server 8000
+python -m http.server 8000 --directory public
 ```
 
-Y abrir `http://localhost:8000` en el navegador. Ctrl+C para detenerlo.
+Usar siempre el puerto `8000` para este proyecto. Abrir `http://localhost:8000` en el navegador. Ejecuta el comando desde la raíz del repositorio; Ctrl+C detiene el servidor.
 
 ## Notas Importantes
 

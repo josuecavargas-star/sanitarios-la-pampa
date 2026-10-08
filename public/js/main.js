@@ -99,7 +99,8 @@ const initSite = () => {
 
     function startAutoplay() {
       stopAutoplay();
-      autoplayTimer = setInterval(next, 5000);
+      const autoplayInterval = Number(sliderEl.dataset.autoplayInterval) || 5000;
+      autoplayTimer = setInterval(next, autoplayInterval);
     }
 
     slides.forEach((_, i) => {
