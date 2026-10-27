@@ -188,10 +188,19 @@ if (document.readyState === "loading") {
 } else {
   initSite();
 }
-// Splash screen
+// Splash screen (only on first visit per language)
 (function () {
   var splash = document.getElementById('splash');
   if (!splash) return;
+  var lang = (document.documentElement.lang === 'en') ? 'en' : 'es';
+  var key = 'splash_shown_' + lang;
+  try {
+    if (sessionStorage.getItem(key)) {
+      splash.remove();
+      return;
+    }
+    sessionStorage.setItem(key, '1');
+  } catch (e) {}
   function hide() {
     splash.classList.add('is-hidden');
     setTimeout(function () { splash.remove(); }, 700);
