@@ -9,8 +9,17 @@
   <link rel="icon" href="img/favicon-512.png" sizes="512x512" />
   <link rel="apple-touch-icon" href="img/favicon-180.png" />
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="alternate" hreflang="es" href="galeria.html" />
+  <link rel="alternate" hreflang="en" href="en/galeria.html" />
+  <link rel="alternate" hreflang="x-default" href="galeria.html" />
 </head>
 <body class="gallery-page">
+  <div id="splash" class="splash">
+    <div class="splash__inner">
+      <img src="img/logo%20nuevo/sanitarios_la_pampa_logo.svg" alt="Sanitarios La Pampa" class="splash__logo" />
+      <p class="splash__slogan">Somos la opción</p>
+    </div>
+  </div>
   <header class="header">
     <div class="container header__inner">
       <a href="index.html#inicio" class="logo">
@@ -35,6 +44,10 @@
         </a>
       </div>
 
+      <span class="lang-switch">
+        <a href="galeria.html" class="lang-switch__link lang-switch__link--active" hreflang="es">ES</a>
+        <a href="en/galeria.html" class="lang-switch__link" hreflang="en">EN</a>
+      </span>
       <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
         <span></span><span></span><span></span>
       </button>

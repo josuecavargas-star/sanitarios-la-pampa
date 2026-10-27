@@ -188,3 +188,17 @@ if (document.readyState === "loading") {
 } else {
   initSite();
 }
+// Splash screen
+(function () {
+  var splash = document.getElementById('splash');
+  if (!splash) return;
+  function hide() {
+    splash.classList.add('is-hidden');
+    setTimeout(function () { splash.remove(); }, 700);
+  }
+  if (document.readyState === 'complete') {
+    setTimeout(hide, 1200);
+  } else {
+    window.addEventListener('load', function () { setTimeout(hide, 1200); });
+  }
+})();
