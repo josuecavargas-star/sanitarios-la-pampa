@@ -100,12 +100,7 @@ ul {
 }
 
 @media (max-width: 900px) {
-  .social-links {
-    order: 2;
-    flex: 0 0 100%;
-    margin: 0;
-    justify-content: center;
-  }
+  /* Header móvil: todo en una sola línea */
 }
 
 /* ---------- Header ---------- */
@@ -211,7 +206,7 @@ ul {
   font-size: 0.85rem;
   padding: 6px 14px;
   border-radius: 999px;
-  margin-bottom: 18px;
+  margin-bottom: 10px;
 }
 
 .hero h1 {
@@ -384,7 +379,7 @@ ul {
 .section__head h1,
 .section__head h2 {
   font-size: clamp(1.6rem, 3vw, 2.2rem);
-  margin-bottom: 12px;
+  margin-bottom: 18px;
   letter-spacing: -0.4px;
 }
 
@@ -536,7 +531,7 @@ ul {
 .about__list li {
   position: relative;
   padding-left: 30px;
-  margin-bottom: 12px;
+  margin-bottom: 18px;
   color: var(--color-dark);
   font-weight: 600;
 }
@@ -908,10 +903,41 @@ ul {
 @media (max-width: 900px) {
   .header__inner {
     height: auto;
-    min-height: 72px;
-    flex-wrap: wrap;
-    row-gap: 8px;
-    padding-block: 8px;
+    min-height: 56px;
+    flex-wrap: nowrap;
+    gap: 8px;
+    padding-block: 4px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo__img {
+    height: 52px;
+  }
+
+  .social-links {
+    display: flex;
+    order: 0;
+    flex: 1;
+    margin: 0;
+    align-self: center;
+    flex-shrink: 0;
+    gap: 6px;
+    justify-content: center;
+  }
+
+  .nav-toggle {
+    flex-shrink: 0;
+  }
+
+  .social-link {
+    width: 32px;
+    height: 32px;
+  }
+
+  .social-link svg {
+    width: 18px;
+    height: 18px;
   }
 
   .about,
@@ -954,12 +980,17 @@ ul {
 
 @media (max-width: 520px) {
   .social-links {
-    gap: 6px;
+    gap: 2px;
   }
 
   .social-link {
-    width: 34px;
-    height: 34px;
+    width: 26px;
+    height: 26px;
+  }
+
+  .social-link svg {
+    width: 14px;
+    height: 14px;
   }
 
   .section {
