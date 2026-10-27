@@ -1098,18 +1098,19 @@ ul {
   text-align: center;
 }
 .splash__logo {
-  width: 120px;
+  width: 200px;
   height: auto;
   display: block;
   margin: 0 auto;
   animation: splashFade 0.8s ease;
 }
 .splash__slogan {
-  margin-top: 16px;
+  margin-top: 20px;
   color: #189b1b;
-  font-size: 1.4rem;
+  font-size: 2rem;
   font-weight: 700;
   letter-spacing: 0.5px;
+  text-shadow: 0 2px 8px rgba(24, 155, 27, 0.25);
   animation: splashFade 1s ease 0.3s both;
 }
 @keyframes splashFade {
